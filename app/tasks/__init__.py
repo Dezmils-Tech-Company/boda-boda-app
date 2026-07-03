@@ -6,9 +6,9 @@ celery_app = Celery(
     broker=settings.REDIS_URL,
     backend=settings.REDIS_URL,
     include=[
-        "app.tasks.subscription_reminders",
+        "app.tasks.subscription_redeemer",
         "app.tasks.loan_reminders",
-        "app.tasks.december_redemption_task"
+        "app.tasks.subscription_reminders"
     ]
 )
 

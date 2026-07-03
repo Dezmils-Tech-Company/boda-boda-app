@@ -7,6 +7,11 @@ wheels/
 *.egg-info
 
 # Virtual environments
-.venv
-.env.local
+.venv/
+venv/
+ENV/
+env/
+
+# Environment variables
 .env
+.env.*

@@ -1,7 +1,7 @@
 from celery import shared_task
 from loguru import logger
 from app.models.loan import Loan
-from datetime import datetime
+from datetime import datetime, timedelta
 from app.services.notification_service import send_notification
 
 @shared_task

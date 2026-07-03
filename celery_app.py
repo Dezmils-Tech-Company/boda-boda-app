@@ -6,9 +6,9 @@ celery_app = Celery(
     broker=settings.REDIS_URL,
     backend=settings.REDIS_URL,
     include=[
-        "app.tasks.subscription_reminders",
+        "app.tasks.subscription_redeemer",
         "app.tasks.loan_reminders",
-        "app.tasks.december_redemption_task"
+        "app.tasks.subscription_reminders"
     ]
 )
 
@@ -20,7 +20,7 @@ celery_app.conf.update(
     enable_utc=True,
     beat_schedule={
         "monthly-reminders": {
-            "task": "app.tasks.subscription_reminders.send_monthly_subscription_reminders",
+            "task": "app.tasks.subscription_redeemer.send_monthly_subscription_reminders",
             "schedule": 86400.0,  # Every 24 hours
         },
         "loan-reminders": {
@@ -28,7 +28,7 @@ celery_app.conf.update(
             "schedule": 86400.0,
         },
         "december-redemption": {
-            "task": "app.tasks.december_redemption_task.process_december_redemption",
+            "task": "app.tasks.subscription_reminders.process_december_redemption",
             "schedule": {"month_of_year": 12, "day_of_month": 1, "hour": 9},  # 1st Dec at 9 AM
         },
     },

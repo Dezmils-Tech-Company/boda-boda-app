@@ -32,6 +32,8 @@ loguru==0.7.2
 # Date & Time
 pytz==2024.1
 
+twilio==8.2.0
+
 # Optional but Recommended
 # For better performance and development
 black==24.8.0

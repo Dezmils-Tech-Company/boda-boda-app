@@ -1,11 +1,16 @@
-import httpx
-from app.core.config import settings
 import base64
 from datetime import datetime
 
+import httpx
+from app.core.config import settings
+
 class MpesaClient:
     def __init__(self):
-        self.base_url = "https://sandbox.safaricom.co.ke"  # Change to production URL
+        self.base_url = (
+            "https://sandbox.safaricom.co.ke"
+            if settings.MPESA_ENV.lower() == "sandbox"
+            else "https://api.safaricom.co.ke"
+        )
 
     async def get_access_token(self):
         auth = base64.b64encode(
