@@ -7,7 +7,9 @@ authors = [
     { name = "Dezmils", email = "dez.ezra05@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "bcrypt==4.1.2",
+]
 
 [project.scripts]
 oteri = "oteri:main"
