@@ -30,6 +30,9 @@ class Settings(BaseModel):
     TWILIO_ACCOUNT_SID: Optional[str] = Field(default=None)
     TWILIO_AUTH_TOKEN: Optional[str] = Field(default=None)
     TWILIO_FROM_PHONE: Optional[str] = Field(default=None)
+    CLOUDINARY_CLOUD_NAME: Optional[str] = Field(default=None)
+    CLOUDINARY_API_KEY: Optional[str] = Field(default=None)
+    CLOUDINARY_API_SECRET: Optional[str] = Field(default=None)
 
     @classmethod
     def from_env(cls):
@@ -55,6 +58,9 @@ class Settings(BaseModel):
             TWILIO_ACCOUNT_SID=os.getenv("TWILIO_ACCOUNT_SID"),
             TWILIO_AUTH_TOKEN=os.getenv("TWILIO_AUTH_TOKEN"),
             TWILIO_FROM_PHONE=os.getenv("TWILIO_FROM_PHONE"),
+            CLOUDINARY_CLOUD_NAME=os.getenv("CLOUDINARY_CLOUD_NAME"),
+            CLOUDINARY_API_KEY=os.getenv("CLOUDINARY_API_KEY"),
+            CLOUDINARY_API_SECRET=os.getenv("CLOUDINARY_API_SECRET"),
         )
 
 settings = Settings.from_env()

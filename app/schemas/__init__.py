@@ -12,6 +12,7 @@ from .rental import (
 )
 from .loan import CollateralAssetCreate, LoanApplication, EligibilityResponse, LoanResponse
 from .financial import GroupFinancialSummary, MemberFinancialSummary
+from .transaction import TransactionResponse
 
 __all__ = [
     "BaseResponse", "ErrorResponse",
@@ -22,5 +23,6 @@ __all__ = [
     "InventoryItemCreate", "InventoryItemResponse",
     "RentalBookingCreate", "RentalBookingResponse",
     "CollateralAssetCreate", "LoanApplication", "EligibilityResponse", "LoanResponse",
-    "GroupFinancialSummary", "MemberFinancialSummary"
+    "GroupFinancialSummary", "MemberFinancialSummary",
+    "TransactionResponse"
 ]

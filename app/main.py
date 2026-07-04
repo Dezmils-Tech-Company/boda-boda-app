@@ -4,7 +4,7 @@ from loguru import logger
 from app.core.config import settings
 from app.core.database import init_db
 from app.core.logging_config import configure_logging
-from app.routers import auth_router, user_router, welfare_router, rental_router, savings_loan_router, financial_router, mpesa_router
+from app.routers import auth_router, user_router, welfare_router, rental_router, savings_loan_router, financial_router, mpesa_router, report_router
 
 configure_logging()
 
@@ -41,3 +41,4 @@ app.include_router(rental_router.router, prefix="/api/v1/rentals", tags=["Rental
 app.include_router(savings_loan_router.router, prefix="/api/v1/loans", tags=["Loans & Savings"])
 app.include_router(financial_router.router, prefix="/api/v1/financials", tags=["Financials"])
 app.include_router(mpesa_router.router, prefix="/api/v1/mpesa", tags=["M-Pesa"])
+app.include_router(report_router.router, prefix="/api/v1", tags=["Reports"])

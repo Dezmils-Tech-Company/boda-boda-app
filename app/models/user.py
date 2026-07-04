@@ -20,6 +20,8 @@ class User(Document):
     full_name: str
     hashed_password: Optional[str] = None
     id_number: Optional[str] = None
+    image: Optional[str] = None
+    photo: Optional[str] = None
     family_members: List[FamilyMember] = Field(default_factory=list)
     next_of_kin: Optional[NextOfKin] = None
     role: UserRole = UserRole.Member

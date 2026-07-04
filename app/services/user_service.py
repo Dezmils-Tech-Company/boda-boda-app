@@ -12,6 +12,9 @@ async def create_user(user_data: UserCreate):
 
     user_dict = user_data.dict()
     pin = user_dict.pop("pin", None)
+    photo = user_dict.pop("photo", None)
+    if photo and not user_dict.get("image"):
+        user_dict["image"] = photo
     if not pin:
         raise ValueError("PIN is required")
 
@@ -33,5 +36,9 @@ async def get_all_users():
 async def update_user(user_id: str, update_data: UserUpdate):
     user = await User.get(user_id)
     if user:
-        await user.update({"$set": update_data.dict(exclude_unset=True)})
+        update_payload = update_data.dict(exclude_unset=True)
+        photo = update_payload.pop("photo", None)
+        if photo and not update_payload.get("image"):
+            update_payload["image"] = photo
+        await user.update({"$set": update_payload})
     return user

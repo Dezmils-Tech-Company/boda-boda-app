@@ -7,11 +7,23 @@ async def get_group_summary():
     total_income = sum(t.amount for t in total_transactions if t.amount > 0)
     total_expenses = sum(-t.amount for t in total_transactions if t.amount < 0)
     total_balance = total_income - total_expenses
+
+    members = await User.all().to_list()
+    members_savings_total = 0.0
+    for member in members:
+        member_transactions = [
+            t for t in total_transactions if str(getattr(t.member, "id", None)) == str(member.id)
+        ]
+        member_contributed = sum(t.amount for t in member_transactions if t.amount > 0)
+        member_withdrawn = sum(-t.amount for t in member_transactions if t.amount < 0)
+        members_savings_total += max(member_contributed - member_withdrawn, 0.0)
+
     active_loans = await Loan.find({"status": {"$in": ["Pending", "Approved"]}}).to_list()
     return {
         "total_balance": total_balance,
         "total_income": total_income,
         "total_expenses": total_expenses,
+        "members_savings_total": members_savings_total,
         "active_loans": len(active_loans),
     }
 

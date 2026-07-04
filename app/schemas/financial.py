@@ -14,6 +14,7 @@ class GroupFinancialSummary(BaseModel):
     total_balance: float
     total_income: float
     total_expenses: float
+    members_savings_total: float
     active_loans: int
 
 class MemberFinancialSummary(BaseModel):
