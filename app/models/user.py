@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from beanie import Document
 from pydantic import BaseModel, Field
+from app.core.permissions import UserRole
 
 class FamilyMember(BaseModel):
     name: str
@@ -21,7 +22,7 @@ class User(Document):
     id_number: Optional[str] = None
     family_members: List[FamilyMember] = Field(default_factory=list)
     next_of_kin: Optional[NextOfKin] = None
-    role: str = "Member"  # Admin, Treasurer, Secretary, Member
+    role: UserRole = UserRole.Member
     status: str = "Active"
     join_date: datetime = Field(default_factory=datetime.utcnow)
     created_at: datetime = Field(default_factory=datetime.utcnow)

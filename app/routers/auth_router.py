@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Body
-from app.schemas.auth import LoginRequest, Token
+from fastapi.security import OAuth2PasswordRequestForm
+from app.schemas.auth import Token
 from app.services.auth_service import (
     authenticate_user,
     create_access_token,
@@ -13,8 +14,8 @@ from app.core.security import get_current_user
 router = APIRouter()
 
 @router.post("/login", response_model=Token)
-async def login(credentials: LoginRequest):
-    user = await authenticate_user(credentials.phone, credentials.pin)
+async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    user = await authenticate_user(form_data.username, form_data.password)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -22,12 +23,13 @@ async def login(credentials: LoginRequest):
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    access_token = create_access_token({"sub": user.phone, "role": user.role})
-    refresh_token = create_refresh_token({"sub": user.phone, "role": user.role})
+    access_token = create_access_token({"sub": user.phone, "role": user.role.value})
+    refresh_token = create_refresh_token({"sub": user.phone, "role": user.role.value})
     return {
         "access_token": access_token,
         "token_type": "bearer",
         "refresh_token": refresh_token,
+        "role": user.role,
     }
 
 @router.post("/refresh", response_model=Token)
@@ -40,12 +42,13 @@ async def refresh_token(refresh_token: str = Body(..., embed=True)):
             headers={"WWW-Authenticate": "Bearer"},
         )
 
-    access_token = create_access_token({"sub": token_data.phone, "role": token_data.role})
-    new_refresh_token = create_refresh_token({"sub": token_data.phone, "role": token_data.role})
+    access_token = create_access_token({"sub": token_data.phone, "role": token_data.role.value})
+    new_refresh_token = create_refresh_token({"sub": token_data.phone, "role": token_data.role.value})
     return {
         "access_token": access_token,
         "token_type": "bearer",
         "refresh_token": new_refresh_token,
+        "role": token_data.role,
     }
 
 @router.post("/reset-pin")

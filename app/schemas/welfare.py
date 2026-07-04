@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
+from app.schemas.base import DocumentResponse
 
 class WelfareEventCreate(BaseModel):
     event_type: str
@@ -10,8 +11,7 @@ class WelfareEventCreate(BaseModel):
     amount_per_member: float
     deadline: datetime
 
-class WelfareEventResponse(BaseModel):
-    id: str
+class WelfareEventResponse(DocumentResponse):
     event_type: str
     title: str
     amount_per_member: float

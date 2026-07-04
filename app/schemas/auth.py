@@ -1,15 +1,13 @@
 from pydantic import BaseModel
 from typing import Optional
-
-class LoginRequest(BaseModel):
-    phone: str
-    pin: str
+from app.core.permissions import UserRole
 
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
     refresh_token: Optional[str] = None
+    role: UserRole
 
 class TokenData(BaseModel):
     phone: str
-    role: str
+    role: UserRole

@@ -2,8 +2,9 @@ from datetime import datetime
 from pydantic import BaseModel
 from typing import List, Optional
 
-class TransactionResponse(BaseModel):
-    id: str
+from app.schemas.base import DocumentResponse
+
+class TransactionResponse(DocumentResponse):
     type: str
     amount: float
     description: str

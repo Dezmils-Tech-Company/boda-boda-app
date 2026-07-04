@@ -1,10 +1,13 @@
 from datetime import datetime
 
+from loguru import logger
+
 from app.models.audit_log import AuditLog
 from app.models.event_contribution import EventContribution
 from app.models.transaction import Transaction
 from app.models.user import User
 from app.models.welfare_event import WelfareEvent
+from app.services.notification_service import send_notification
 
 async def create_welfare_event(event_data, created_by):
     affected_member = await User.get(event_data.affected_member_id)
@@ -30,6 +33,22 @@ async def create_welfare_event(event_data, created_by):
             amount_due=event.amount_per_member,
         )
         await contrib.insert()
+
+    notification_message = (
+        f"New welfare event posted: {event.title}. "
+        f"Contribution due: KES {event.amount_per_member:.2f}. "
+        "Check the app for details."
+    )
+    for member in members:
+        try:
+            await send_notification(member.phone, notification_message)
+        except Exception as exc:
+            logger.error(
+                "Failed to send welfare event notification",
+                member_phone=member.phone,
+                error=str(exc),
+                event_id=str(event.id),
+            )
 
     await AuditLog(
         action="create_welfare_event",

@@ -2,6 +2,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
 from app.core.config import settings
 from app.models.user import User
+from app.models.asset import Asset
 from app.models.group_settings import GroupSettings
 from app.models.welfare_event import WelfareEvent
 from app.models.event_contribution import EventContribution
@@ -17,7 +18,7 @@ async def init_db():
     await init_beanie(
         database=client[settings.MONGO_DB_NAME],
         document_models=[
-            User, GroupSettings, WelfareEvent, EventContribution,
+            User, Asset, GroupSettings, WelfareEvent, EventContribution,
             InventoryItem, RentalBooking, SubscriptionPayment,
             Loan, Transaction, AuditLog
         ]

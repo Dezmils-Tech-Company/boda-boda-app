@@ -17,6 +17,9 @@ class Loan(Document):
     monthly_installment: float
     purpose: str
     guarantors: List[Link["User"]] = Field(default_factory=list)
+    treasurer_approved: bool = False
+    secretary_approved: bool = False
+    chairperson_approved: bool = False
     status: str = "Pending"
     disbursement_date: Optional[datetime] = None
     repayment_schedule: List[RepaymentItem] = Field(default_factory=list)

@@ -3,6 +3,7 @@ from typing import Optional
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from app.core.config import settings
+from app.core.permissions import UserRole
 from app.models.user import User
 from app.schemas.auth import TokenData
 

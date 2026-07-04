@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from app.schemas.user import UserCreate, UserResponse, UserUpdate
-from app.services.user_service import create_user, get_user_by_phone, get_all_users
+from app.services.user_service import create_user, get_user_by_phone, get_all_users, update_user
 from app.core.security import get_current_user, require_admin
 
 router = APIRouter()

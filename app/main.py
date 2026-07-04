@@ -31,7 +31,7 @@ async def startup_event():
 
 @app.get("/")
 async def root():
-    return {"status": "ok", "message": "Boda Boda Chama API is running"}
+    return {"status": "ok", "message": "Oteri main stage API is running"}
 
 # Include routers
 app.include_router(auth_router.router, prefix="/api/v1/auth", tags=["Auth"])
